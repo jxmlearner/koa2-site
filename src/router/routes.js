@@ -11,9 +11,14 @@ module.exports = app => {
         await ctx.render('index', vm)
     })
 
-    router.get('/chat',async (ctx,next)=>{
+    router.get('/chat',async(ctx,next)=>{
         let vm={title:'Socket.io 聊天'}
-        await ctx.render('index',vm)
+        await ctx.render('chat',vm)
+    })
+
+    router.get('/simplechat',async (ctx,next)=>{
+        let vm={title:'Socket.io 聊天'}
+        await ctx.render('simplechat',vm)
     })
 
     //apiRouter.post('/user/login', app.controller.user.login)

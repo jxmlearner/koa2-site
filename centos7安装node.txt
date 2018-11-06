@@ -1,0 +1,63 @@
+https://www.cnblogs.com/failed/p/8862573.html
+
+https://www.cnblogs.com/lpbottle/p/7733397.html
+
+先安装NVM的方式：https://www.jianshu.com/p/ebb0e97eff83
+
+
+最简洁的命令
+
+yum -y update
+
+yum -y install gcc make gcc-c++ openssl-devel wget vim（后面两个如果没有再选择安装）
+
+cd /usr/local/src
+
+wget https://nodejs.org/dist/v8.11.1/node-v8.11.1.tar.gz
+
+tar xvzf node-v8.11.1.tar.gz cd node-v8.9.4
+
+mv node-v8.11.1 node
+
+---------------------------------------------------------------------------------------------------------------------------
+
+直接使用编译好的版本命令
+
+yum -y update
+
+ 
+
+yum install nodejs
+ 
+
+npm install -i -g n
+
+到此就随意选择版本
+
+ 
+
+./configure --prefix=/usr/local/node
+
+sudo make && makeinstall
+
+vim /etc/profile（进入该文件后输入 i 编辑模式 ）
+
+移动到文件最后输入
+
+#set for nodejs  
+export NODE_HOME=/usr/local/node  
+export PATH=$NODE_HOME/bin:$PATH
+source /etc/profile
+
+ 
+
+node -v (出现对应的版本号：8.11.1 )
+
+ 
+
+用图介绍版本（服务器选择安装Source Code选择版本）
+
+一定要安装 gcc make gcc-c++ 如果不安装会在make命令结束时出现错误
+
+
+
