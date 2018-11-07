@@ -20,10 +20,10 @@
         <div class="panel-heading"><span class="glyphicon glyphicon-user">&nbsp;</span><span>在线成员</span></div>
         <div class="panel-body">
           <div class="msg-list-body user-content">
-            <ul>
-              <li style="display:none;"><a href="#"><img src="images/1.jpg" class="img-thumbnail"><span></span></a></li>
-              <li style="display: list-item;"><a href="javascript:void(0);"><img src="images/4.jpg" class="img-thumbnail"><span>hfghgfhg</span></a></li>
-              <li style="display: list-item;"><a href="javascript:void(0);"><img src="images/1.jpg" class="img-thumbnail"><span>gdfgsdfg</span></a></li>
+            <ul id="onLineUsers">
+              <!-- <li style="display:none;"><a href="#"><img src="images/1.jpg" class="img-thumbnail"><span></span></a></li>
+              <li><a href="javascript:void(0);"><img src="images/4.jpg" class="img-thumbnail"><span>hfghgfhg</span></a></li>
+              <li><a href="javascript:void(0);"><img src="images/1.jpg" class="img-thumbnail"><span>gdfgsdfg</span></a></li> -->
             </ul>
           </div>
         </div>
@@ -41,10 +41,10 @@
     </div>
     <div class="col-sm-9">
       <div class="panel panel-primary">
-        <div class="panel-heading"><span class="glyphicon glyphicon-comment">&nbsp;</span><span>聊天室</span><span style="padding-left:10px; font-size:12px; ">正在与 hfghgfhg 聊天</span><span id="spanuser" class="pull-right">欢迎您！ gdfgsdfg</span></div>
+        <div class="panel-heading"><span class="glyphicon glyphicon-comment">&nbsp;</span><span>聊天室</span><span style="padding-left:10px; font-size:12px; ">正在与 hfghgfhg 聊天</span><span id="spanuser" class="pull-right">欢迎您！ 游客</span></div>
         <div class="panel-body">
           <div class="msg-list-body msg-content">
-            <div class="message-reply">
+            <!-- <div class="message-reply">
               <div class="message-info">
                 <div class="user-info"><img title="hfghgfhg" src="images/4.jpg" class="user-avatar img-thumbnail"></div>
                 <div class="message-content-box">
@@ -61,7 +61,7 @@
                   <div class="message-content">fsdfsfaddfadf</div>
                 </div>
               </div>
-            </div>
+            </div> -->
           </div>
         </div>
         <div class="panel-footer">
@@ -91,7 +91,7 @@
         <div class="form-group">
           <div class="input-group">
             <div class="input-group-addon">昵称</div>
-            <input id="username" value="李阳" onKeyDown="javascript:void(0);" class="form-control" type="text">
+            <input id="username" placeholder="请输入您的昵称" onKeyDown="javascript:void(0);" class="form-control" type="text">
           </div>
         </div>
       </div>
