@@ -2,6 +2,8 @@ const Router = require('koa-router')
 
 module.exports = app => {
     const router = new Router()
+    const adminRouter=new Router()
+
     //const apiRouter = new Router()
 
     router.get('/', async (ctx, next) => {
@@ -26,6 +28,12 @@ module.exports = app => {
 
     //设定api路由为router的子路由
     //router.use('/api', apiRouter.routes(), apiRouter.allowedMethods())
+
+
+    //管理员路由模块
+    adminRouter.get('/user',app.controller.user.getAll)
+
+    router.use('/admin',adminRouter.routes(),adminRouter.allowedMethods())
 
     //如果匹配不到路由则返回404
     router.all('/*', async (ctx, next) => {
