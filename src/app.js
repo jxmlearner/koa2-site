@@ -8,6 +8,7 @@ const koaLogger=require('koa-logger')              //开发阶段的终端日志
 const bodyparser=require('koa-bodyparser')
 const static=require('koa-static')                 //静态资源
 
+const middleware = require('./middleware')         //controller和service的中间件
 const router = require('./router/routes')          //路由
 const chat=require('./socket/chat')                //聊天室 类
 
@@ -27,7 +28,7 @@ app.use(views(path.join(__dirname, './view'), {
     map: { html: 'nunjucks' }
 }))
 
-
+middleware(app)       //应用controller和service的中间件
 app.use(koaLogger())  //开发日志
 app.use(cors({credentials: true}))       //允许跨域,并且允许附带cookie
 app.use(json())       

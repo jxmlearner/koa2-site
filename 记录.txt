@@ -1,5 +1,5 @@
 1、npm init -y
-2、cnpm i -S koa koa-router koa-views nunjucks koa-static koa-bodyparser koa-json kcors koa-logger
+2、cnpm i -S koa koa-router koa-views nunjucks koa-static koa-bodyparser koa-json kcors koa-logger log4js
 3、安装调试工具 并配置package.json中的运行脚本 
 cnpm i -D nodemon
 
@@ -123,3 +123,11 @@ module.exports={
 	}
 }
 ```
+
+
+
+加入 mvc的controller和service的中间件
+加入 log4js日志记录 cnpm i -S log4js  日志文件的配置在 config/log_config.js
+
+
+
