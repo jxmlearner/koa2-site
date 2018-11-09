@@ -59,6 +59,11 @@ class chat {
                 io.emit('chat message',msg)    //这种方式的广播消息,所有的连接（包括自己）客户端都能收到
                 //socket.broadcast.emit('chat message',msg)
             });
+
+            socket.on('chat to all',(msg,sender)=>{
+                socket.broadcast.emit('chat to all',msg,sender)
+            })
+
         })
     }
 }

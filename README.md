@@ -1,4 +1,4 @@
-# 使用 Koa2构建一个图书站点, 练习 socket.io,nunjucks,等技术使用
+# 使用 Koa2构建一个图书站点, 练习 socket.io,nunjucks,等技术使用 (线学习项目，很杂，想加入啥就加入啥)
 
 ## 1、安装包
 
@@ -138,6 +138,8 @@ module.exports={
 ## 3、加入 log4js日志记录 cnpm i -S log4js  日志文件的配置在 config/log_config.js
 
 
+## 使用Socket.io的聊天
+![聊天截图](./md/chat.png)
 
 # 碰到问题记录
 
