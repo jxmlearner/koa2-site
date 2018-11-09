@@ -49,7 +49,7 @@ app.use(views(path.join(__dirname, './view'),{
 }))
 
 app.use(koaLogger())  //开发日志
-app.use(cors())       //允许跨域
+app.use(cors({credentials: true}))       //允许跨域,并且允许附带cookie
 app.use(json())       
 app.use(bodyparser())
 

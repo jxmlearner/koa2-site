@@ -68,7 +68,7 @@ class chat {
             socket.on('chat to one',(msg,sender,toId)=>{
                 //找到要发送给哪个用户的socket
                 const toSocket=that.io.sockets.sockets[toId]
-                console.log(that.io.sockets)
+                //console.log(that.io.sockets)
                 if(toSocket) toSocket.emit('chat to one',msg,sender)
             })
 
