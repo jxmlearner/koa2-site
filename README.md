@@ -2,18 +2,20 @@
 
 ## 1、安装包
 
-+ 1、npm init -y
-+ 2、cnpm i -S koa koa-router koa-views nunjucks koa-static koa-bodyparser koa-json kcors koa-logger log4js
-+ 3、安装调试工具 并配置package.json中的运行脚本 
++ 1、`npm init -y`
++ 2、`cnpm i -S koa koa-router koa-views nunjucks koa-static koa-bodyparser koa-json kcors koa-logger log4js`
++ 3、安装调试工具 并配置package.json中的运行脚本
+``` 
 cnpm i -D nodemon
 
 scripts:{
 	"dev":"nodemon -w src src/app.js"
 }
+```
 
-+ 4、cnpm i -S socket.io
++ 4、`cnpm i -S socket.io`
 
-var server = require('http').Server(app.callback());
+`var server = require('http').Server(app.callback());`
 
 src/app.js
 ```
@@ -136,4 +138,8 @@ module.exports={
 ## 3、加入 log4js日志记录 cnpm i -S log4js  日志文件的配置在 config/log_config.js
 
 
+
+# 碰到问题记录
+
++ vue的绑定方法和nunjucks的{{}}方式冲突，更改vue的绑定方式 `delimiters: ['${', '}'],`    绑定的时候使用 ${dialog.content}
 
