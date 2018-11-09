@@ -41,7 +41,7 @@
     </div>
     <div class="col-sm-9">
       <div class="panel panel-primary">
-        <div class="panel-heading"><span class="glyphicon glyphicon-comment">&nbsp;</span><span>聊天室</span><span style="padding-left:10px; font-size:12px; ">正在与 hfghgfhg 聊天</span><span id="spanuser" class="pull-right">欢迎您！ 游客</span></div>
+        <div class="panel-heading"><span class="glyphicon glyphicon-comment">&nbsp;</span><span>聊天室</span><span style="padding-left:10px; font-size:12px; ">正在与大家聊天</span><span id="spanuser" class="pull-right">欢迎您！ 游客</span></div>
         <div class="panel-body">
           <div class="msg-list-body msg-content">
             <!-- <div class="message-reply">
@@ -108,7 +108,8 @@
         <h4 id="myModalLabel1" class="modal-title"></h4>
       </div>
       <div class="modal-body">
-        <input id="input_msgToOne" onKeyDown="javascript:void(0);" class="form-control" type="text">
+        <input type="hidden" id="hid_msgTo" />
+        <input id="input_msgToOne" class="form-control" type="text">
       </div>
       <div class="modal-footer">
         <input id="btn_toOne" value="发送/Send" class="btn btn-primary" type="button">

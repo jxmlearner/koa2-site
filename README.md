@@ -138,7 +138,7 @@ module.exports={
 ## 3、加入 log4js日志记录 cnpm i -S log4js  日志文件的配置在 config/log_config.js
 
 
-## 使用Socket.io的聊天
+## 使用Socket.io的聊天, 代码位置 src/socket/chat.js
 ![聊天截图](./md/chat.png)
 
 # 碰到问题记录

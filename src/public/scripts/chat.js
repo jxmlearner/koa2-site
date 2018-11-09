@@ -38,17 +38,23 @@ $(function () {
         toastr.info(`用户${loginuser.name}上线了`)
     })
 
+    socket.on('chat to one',(msg,sender)=>{
+        receiveMsg(msg,sender)
+    })
+
     //设置左侧在线用户列表
     function setOnLineUserList(users) {
-        console.log(users)
         onLineUsers = users
         var html = users.reduce((cur, next) => {
-            var temp = `<li><a href="javascript:void(0);" title="${next.name}"><img src="${next.img}" class="img-thumbnail"><span>${next.name}</span></a></li>`;
+            var temp = `<li><a  data-id="${next.id}" title="${next.name}"><img src="${next.img}" class="img-thumbnail"><span>${next.name}</span></a></li>`;
             return cur += temp;
         }, '')
         $("#onLineUsers").html(html);
     }
 
+    $("#username").on('keypress',function(e){
+        if(e.keyCode==13) $('#btn-setName').click()
+    })
     //login
     $('#btn-setName').click(function () {
         var name = $('#username').val();
@@ -119,7 +125,7 @@ $(function () {
       </div>`
         $('.msg-content').append($(html))
     }
-
+    //收到其它人发的消息
     function receiveMsg(msg,sender){
         html=`<div class="message-receive">
         <div class="message-info">
@@ -132,5 +138,34 @@ $(function () {
       </div>`
         $('.msg-content').append($(html))
     }
+
+    //在线用户列表的单个项点击事件 (点击某个用户私聊)
+    $("#onLineUsers").on('click',"li>a",function(){
+        let toUserId=$(this).data('id')
+        let toUserName=$(this).attr('title')
+        if(toUserId==currentUser.id){
+            toastr.warning('oops，不能跟自己聊天啦')
+            return
+        }
+        $("#hid_msgTo").val(toUserId)
+        $("#myModalLabel1").html(`正在与${toUserName}聊天`)
+        //弹出私聊的modal
+        $('#setMsgToOne').modal({
+            backdrop: 'static'
+        })
+    })
+
+    $("#input_msgToOne").keydown(function(e){
+        if(e.keyCode==13) $("#btn_toOne").click()
+    })
+    $("#btn_toOne").click(function(){
+        var msg=$("#input_msgToOne").val();
+        if(!msg) {toastr.warning('聊天内容不能为空！'); return;}
+        socket.emit('chat to one',msg,currentUser,$("#hid_msgTo").val())
+        addMySelfMsg(msg)   
+        $("#input_msgToOne").val('')   //清空输入框
+        $("#hid_msgTo").val('')
+        $('#setMsgToOne').modal('hide');
+    })
 
 })
