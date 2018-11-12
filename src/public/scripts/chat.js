@@ -24,8 +24,11 @@ $(function () {
     })
 
     //收到群聊消息
-    socket.on('chat to all', function (msg,sender) {    
-        receiveMsg(msg,sender)
+    socket.on('chat to all', function (msg, sender) {
+        receiveMsg({from:sender,msg }, false,false)
+    })
+    socket.on('sendImageToAll',(msgObj)=>{         //接收到了图片消息
+        receiveMsg(msgObj,false,true)
     })
 
     socket.on('leave chat', function (leaveUser) {
@@ -38,8 +41,8 @@ $(function () {
         toastr.info(`用户${loginuser.name}上线了`)
     })
 
-    socket.on('chat to one',(msg,sender)=>{
-        receiveMsg(msg,sender)
+    socket.on('chat to one', (msg, sender) => {
+        receiveMsg({from:sender,msg }, false,false)
     })
 
     //设置左侧在线用户列表
@@ -52,8 +55,8 @@ $(function () {
         $("#onLineUsers").html(html);
     }
 
-    $("#username").on('keypress',function(e){
-        if(e.keyCode==13) $('#btn-setName').click()
+    $("#username").on('keypress', function (e) {
+        if (e.keyCode == 13) $('#btn-setName').click()
     })
     //login
     $('#btn-setName').click(function () {
@@ -99,7 +102,7 @@ $(function () {
             sendMsgToAll()
         }
     })
-    $('#sendMsg').on('click',function(){
+    $('#sendMsg').on('click', function () {
         sendMsgToAll()
     })
 
@@ -107,43 +110,39 @@ $(function () {
     function sendMsgToAll() {
         var msg = $('#msg').val()
         if (!msg) { toastr.warning('聊天信息不能为空'); return; }
-        socket.emit('chat to all',msg,currentUser)
-        addMySelfMsg(msg)   
+        socket.emit('chat to all', msg, currentUser)
+        receiveMsg({from:currentUser,msg},true,false)
         $("#msg").val('')   //清空输入框
     }
 
-    //消息内容窗口增加自己刚刚的群聊消息
-    function addMySelfMsg(msg){
-        html=`<div class="message-reply">
+    //收到消息(包括自己的消息，别人的消息，以及图片消息)
+    function receiveMsg(msgObj, isSelf,isImgMsg) {
+        var msgType=isSelf?'message-reply':'message-receive'
+        var html = `<div class="${msgType}">
         <div class="message-info">
-          <div class="user-info"><img title="${currentUser.name}" src="${currentUser.img}" class="user-avatar img-thumbnail"></div>
+          <div class="user-info"><img title="${msgObj.from.name}" src="${msgObj.from.img}" class="user-avatar img-thumbnail"></div>
           <div class="message-content-box">
             <div class="arrow"></div>
-            <div class="message-content">${msg}</div>
+            <div class="message-content"></div>
           </div>
         </div>
       </div>`
-        $('.msg-content').append($(html))
-    }
-    //收到其它人发的消息
-    function receiveMsg(msg,sender){
-        html=`<div class="message-receive">
-        <div class="message-info">
-          <div class="user-info"><img title="${sender.name}" src="${sender.img}" class="user-avatar img-thumbnail"></div>
-          <div class="message-content-box">
-            <div class="arrow"></div>
-            <div class="message-content">${msg}</div>
-          </div>
-        </div>
-      </div>`
-        $('.msg-content').append($(html))
+        var $html=$(html)
+        if(isImgMsg){  //如果是图片消息
+            $html.find('.message-content').html('<img src="'+msgObj.img+'" />')
+        }else{
+            $html.find('.message-content').text(msgObj.msg)
+        }
+        $('.msg-content').append($html)
+        //滚动条一直在最底
+        $(".msg-content").scrollTop($(".msg-content")[0].scrollHeight)
     }
 
     //在线用户列表的单个项点击事件 (点击某个用户私聊)
-    $("#onLineUsers").on('click',"li>a",function(){
-        let toUserId=$(this).data('id')
-        let toUserName=$(this).attr('title')
-        if(toUserId==currentUser.id){
+    $("#onLineUsers").on('click', "li>a", function () {
+        let toUserId = $(this).data('id')
+        let toUserName = $(this).attr('title')
+        if (toUserId == currentUser.id) {
             toastr.warning('oops，不能跟自己聊天啦')
             return
         }
@@ -155,17 +154,42 @@ $(function () {
         })
     })
 
-    $("#input_msgToOne").keydown(function(e){
-        if(e.keyCode==13) $("#btn_toOne").click()
+    $("#input_msgToOne").keydown(function (e) {
+        if (e.keyCode == 13) $("#btn_toOne").click()
     })
-    $("#btn_toOne").click(function(){
-        var msg=$("#input_msgToOne").val();
-        if(!msg) {toastr.warning('聊天内容不能为空！'); return;}
-        socket.emit('chat to one',msg,currentUser,$("#hid_msgTo").val())
-        addMySelfMsg(msg)   
+    $("#btn_toOne").click(function () {
+        var msg = $("#input_msgToOne").val();
+        if (!msg) { toastr.warning('聊天内容不能为空！'); return; }
+        socket.emit('chat to one', msg, currentUser, $("#hid_msgTo").val())
+        receiveMsg({from:currentUser,msg},true,false)
         $("#input_msgToOne").val('')   //清空输入框
         $("#hid_msgTo").val('')
         $('#setMsgToOne').modal('hide');
     })
 
+    //给所有用户发送图片
+    $('#sendImage').change(function () {
+        if (this.files.length != 0) {
+            var file = this.files[0];
+            reader = new FileReader();
+            if (!reader) {
+                alert("!your browser doesn\'t support fileReader");
+                return;
+            }
+            if (file.size >= 1024 * 1024) {
+                toastr.warning("请上传小于1Mb的图片!")
+                return 
+            }
+            reader.onload = function (e) {
+                //console.log(e.target.result);
+                var msgObj = {
+                    from: currentUser,
+                    img: e.target.result
+                };
+                socket.emit('sendImageToAll', msgObj);
+                receiveMsg(msgObj, true,true);
+            };
+            reader.readAsDataURL(file);
+        }
+    });
 })

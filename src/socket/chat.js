@@ -72,6 +72,10 @@ class chat {
                 if(toSocket) toSocket.emit('chat to one',msg,sender)
             })
 
+            //图片消息
+            socket.on('sendImageToAll',(msgObj)=>{     //msgObj是个对象 包括 {from:{name:'jiang',img:'1.jpg'},img:'data:base64'}
+                socket.broadcast.emit('sendImageToAll',msgObj)
+            })
         })
     }
 }

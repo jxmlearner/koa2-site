@@ -31,7 +31,7 @@ module.exports = app => {
 
 
     //管理员路由模块
-    adminRouter.get('/login',app.controller.controller.login)
+    adminRouter.get('/login',app.controller.user.login)
     adminRouter.post('/login',app.controller.user.loginAction)
 
     adminRouter.get('/user',app.controller.user.getAll)

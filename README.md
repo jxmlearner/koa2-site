@@ -140,6 +140,7 @@ module.exports={
 
 ## 使用Socket.io的聊天, 代码位置 src/socket/chat.js
 ![聊天截图](./md/chat.png)
+![发送图片](./md/chat-img.png)
 
 # 碰到问题记录
 
