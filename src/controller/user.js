@@ -7,7 +7,7 @@ module.exports={
     await ctx.render('admin/login')
   },
   loginAction:async(ctx,next)=>{               //验证用户名和密码信息
-    
+
   },
   getAll:async(ctx,next)=>{
     let {app}=ctx;
@@ -19,5 +19,12 @@ module.exports={
     //     userpwd:'123456'
     // }]
     await ctx.render('admin/user',{users})
+  },
+  getPage:async(ctx,next)=>{   //分页数据获取
+    let {app}=ctx
+    let {pageIndex:page=1,pageSize:limit=10,where}=ctx.request.body
+
+    let data=await app.service.user.getPage({page,limit,where})
+    ctx.response.body=result.pageresult("获取成功",data)
   }
 }

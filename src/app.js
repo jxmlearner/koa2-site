@@ -11,6 +11,7 @@ const static=require('koa-static')                 //静态资源
 const middleware = require('./middleware')         //controller和service的中间件
 const router = require('./router/routes')          //路由
 const chat=require('./socket/chat')                //聊天室 类
+const to=require('./util/to')
 
 const app = new Koa()
 
@@ -27,6 +28,7 @@ app.use(views(path.join(__dirname, './view'), {
     },
     map: { html: 'nunjucks' }
 }))
+app.util={to}         // 将处理promise异常的方法直接挂在app下,这样不用每个controller都引入
 
 middleware(app)       //应用controller和service的中间件
 app.use(koaLogger())  //开发日志

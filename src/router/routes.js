@@ -4,7 +4,7 @@ module.exports = app => {
     const router = new Router()
     const adminRouter=new Router()
 
-    //const apiRouter = new Router()
+    const apiRouter = new Router()
 
     router.get('/', async (ctx, next) => {
         let vm = {
@@ -25,9 +25,11 @@ module.exports = app => {
 
     //apiRouter.post('/user/login', app.controller.user.login)
     //apiRouter.get('/user/getall', app.controller.user.getAll)
+    apiRouter.post('/user/getpage',app.controller.user.getPage)   //获取用户分页数据
+    apiRouter.post('/role/getpage',app.controller.role.getPage)   //获取角色分页数据
 
     //设定api路由为router的子路由
-    //router.use('/api', apiRouter.routes(), apiRouter.allowedMethods())
+    router.use('/api', apiRouter.routes(), apiRouter.allowedMethods())
 
 
     //管理员路由模块
