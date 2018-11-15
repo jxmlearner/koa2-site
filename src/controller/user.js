@@ -1,4 +1,5 @@
 const Result=require('../models/result')
+const md5=require('md5')
 
 let result=new Result()
 
@@ -7,10 +8,30 @@ module.exports={
     await ctx.render('admin/login')
   },
   loginAction:async(ctx,next)=>{               //验证用户名和密码信息
+    let { app }= ctx
+    let { username,userpwd:password }=ctx.request.body
+    // TODO: 将密码进行加密后比较
+    let md5Pwd=md5(password)
 
+    let err, user
+    user= await app.service.user.getUserByName(username)
+    if(err){
+      ctx.response.body=result.error('获取用户名和密码执行出错')
+    } else {
+      if(!user){
+        ctx.response.body=result.error(`登录用户${username}不存在`)
+        return 
+      }
+      if(md5Pwd !== user.password ){
+        ctx.response.body=result.error('密码错误')
+        return 
+      }
+      // TODO: 生成 token 返回给客户端
+      ctx.response.body=result.success('登录成功','这里是服务器端生成的token')
+    }
   },
   getAll:async(ctx,next)=>{
-    let {app}=ctx;
+    let {app}=ctx
     let users=await app.service.user.getAll();
     console.log(users)
     //ctx.body=result.success('获取成功',users)

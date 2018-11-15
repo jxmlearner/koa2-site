@@ -1,4 +1,4 @@
-# 使用 Koa2构建一个图书站点, 练习 socket.io,nunjucks,等技术使用 (线学习项目，很杂，想加入啥就加入啥)
+# 使用 Koa2构建一个图书站点, 练习 socket.io,nunjucks,等技术使用 (纯学习项目，很杂，想加入啥就加入啥)
 
 ## 1、安装包
 
@@ -137,6 +137,13 @@ module.exports={
 ## 2、加入 mvc的controller和service的中间件
 ## 3、加入 log4js日志记录 cnpm i -S log4js  日志文件的配置在 config/log_config.js
 
+## 增加 md5 加密模块 （对密码md5加密）
+```
+cnpm i -S md5
+
+const md5 = require('md5')
+let md5Pwd=md5('123456')
+```
 
 ## 使用Socket.io的聊天, 代码位置 src/socket/chat.js
 ![聊天截图](./md/chat.png)

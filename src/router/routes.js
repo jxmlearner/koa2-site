@@ -23,10 +23,10 @@ module.exports = app => {
         await ctx.render('simplechat',vm)
     })
 
-    //apiRouter.post('/user/login', app.controller.user.login)
+    apiRouter.post('/user/loginAction', app.controller.user.loginAction)      //用户登录
     //apiRouter.get('/user/getall', app.controller.user.getAll)
-    apiRouter.post('/user/getpage',app.controller.user.getPage)   //获取用户分页数据
-    apiRouter.post('/role/getpage',app.controller.role.getPage)   //获取角色分页数据
+    apiRouter.post('/user/getpage',app.controller.user.getPage)               //获取用户分页数据
+    apiRouter.post('/role/getpage',app.controller.role.getPage)               //获取角色分页数据
 
     //设定api路由为router的子路由
     router.use('/api', apiRouter.routes(), apiRouter.allowedMethods())
