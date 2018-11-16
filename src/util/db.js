@@ -1,9 +1,8 @@
 const Sequelize = require('sequelize');
 const config = require('../config/config')   //配置文件
-const env = process.env.NODE_ENV || 'development' // Current mode
 
-const sequelize = new Sequelize(config[env].database.database, config[env].database.user, config[env].database.password, {
-  host: config[env].database.host,
+const sequelize = new Sequelize(config.database.database, config.database.user, config.database.password, {
+  host: config.database.host,
   dialect: 'postgres',
   operatorsAliases: false,
   pool: {

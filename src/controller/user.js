@@ -1,11 +1,17 @@
 const Result=require('../models/result')
 const md5=require('md5')
+const jwt=require('jsonwebtoken')
+const config=require('../config/config')
 
 let result=new Result()
 
 module.exports={
   login:async(ctx,next)=>{                     //用户登录页视图
     await ctx.render('admin/login')
+  },
+  logout:async(ctx,next)=>{
+    // TODO: 如果是用的session保留用户登录信息,这里应该清空session
+    ctx.response.body=result.success('退出成功')
   },
   loginAction:async(ctx,next)=>{               //验证用户名和密码信息
     let { app }= ctx
@@ -27,7 +33,9 @@ module.exports={
         return 
       }
       // TODO: 生成 token 返回给客户端
-      ctx.response.body=result.success('登录成功','这里是服务器端生成的token')
+      const token = jwt.sign(user.dataValues, config.tokenSecret, {expiresIn: '1h'})  //token签名 有效期为1小时
+      
+      ctx.response.body=result.success('登录成功',token)
     }
   },
   getAll:async(ctx,next)=>{

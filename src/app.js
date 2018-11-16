@@ -43,9 +43,7 @@ var http = require('http').createServer(app.callback())           //socket.io的
 const chatSocket=new chat(http)
 
 const config = require('./config/config')   //配置文件
-//通过process.env.NODE_ENV来判断是开发还是生产环境,从而加载不同的配置信息
-const env = process.env.NODE_ENV || 'development' // Current mode
 
-http.listen(config[env].port, () => {                           //重点：  因为使用了socket.io, 要使用上面的http变量来listen, 以前忘记改,调试半天找不到原因
-    console.log(`✅ server is running at http://localhost:${config[env].port}`)
+http.listen(config.port, () => {                           //重点：  因为使用了socket.io, 要使用上面的http变量来listen, 以前忘记改,调试半天找不到原因
+    console.log(`✅ server is running at http://localhost:${config.port}`)
 })

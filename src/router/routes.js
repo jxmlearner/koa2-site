@@ -24,6 +24,7 @@ module.exports = app => {
     })
 
     apiRouter.post('/user/loginAction', app.controller.user.loginAction)      //用户登录
+    apiRouter.get('/user/logout',app.controller.user.logout)                  //退出登录
     //apiRouter.get('/user/getall', app.controller.user.getAll)
     apiRouter.post('/user/getpage',app.controller.user.getPage)               //获取用户分页数据
     apiRouter.post('/role/getpage',app.controller.role.getPage)               //获取角色分页数据

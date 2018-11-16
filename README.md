@@ -137,13 +137,60 @@ module.exports={
 ## 2、加入 mvc的controller和service的中间件
 ## 3、加入 log4js日志记录 cnpm i -S log4js  日志文件的配置在 config/log_config.js
 
-## 增加 md5 加密模块 （对密码md5加密）
+## 4、增加 md5 加密模块 （对密码md5加密）
 ```
 cnpm i -S md5
 
 const md5 = require('md5')
 let md5Pwd=md5('123456')
 ```
+## 5、加入jsonwebtoken 及koa-jwt中间件 对api数据的获取进行token认证
+```
+cnpm i -S jsonwebtoken koa-jwt
+
+app.use(async function (ctx, next) {     //如果返回的是401未授权status
+    try {
+      await next()
+    }
+    catch (err){
+      if (401 == err.status) {
+        ctx.status = 401
+        ctx.body = '您未提供Authorization header或者身份过期,请登录获取。'
+      } else {
+        throw err
+      }
+    }
+  })
+
+  /* 路由权限控制 */
+  app.use(jwtKoa({ secret: config.tokenSecret }).unless({
+    // 设置login、register接口，可以不需要认证访问
+    path: [
+      /^\/api\/user\/loginAction/,         //登录接口
+      /^\/api\/user\/logout/,              //退出接口
+      /^((?!\/api).)*$/   // 设置除了私有接口外的其它资源，可以不需要认证访问
+    ]
+  }))
+
+  app.use(async function (ctx, next) {     // 如果是携带了token的请求,解析这个token并 放置在ctx.user下
+    try {
+      const authorization = ctx.header.authorization  // 获取jwt
+      if(authorization) {
+        let token=authorization.split(' ')[1]
+        if(token && token.length>10){ //客户端传过来的Authorization: Bearer null会被解析成token为"null",简单点用长度来过滤
+          let payload = await jwt.verify(token, config.tokenSecret)  // 解密，获取payload
+          ctx.user=payload
+        }        
+      }
+      await next()
+    }
+    catch (err){
+      err.status=401
+      throw err
+    }
+  })
+```
+
 
 ## 使用Socket.io的聊天, 代码位置 src/socket/chat.js
 ![聊天截图](./md/chat.png)
