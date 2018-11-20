@@ -30,9 +30,10 @@ app.use(views(path.join(__dirname, './view'), {
 }))
 app.util={to}         // 将处理promise异常的方法直接挂在app下,这样不用每个controller都引入
 
+app.use(cors({credentials: true}))       //允许跨域,并且允许附带cookie
+
 middleware(app)       //应用controller和service的中间件
 app.use(koaLogger())  //开发日志
-app.use(cors({credentials: true}))       //允许跨域,并且允许附带cookie
 app.use(json())       
 app.use(bodyparser())
 

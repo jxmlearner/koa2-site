@@ -27,7 +27,9 @@ module.exports = app => {
     apiRouter.get('/user/logout',app.controller.user.logout)                  //退出登录
     //apiRouter.get('/user/getall', app.controller.user.getAll)
     apiRouter.post('/user/getpage',app.controller.user.getPage)               //获取用户分页数据
-    apiRouter.post('/role/getpage',app.controller.role.getPage)               //获取角色分页数据
+    apiRouter.post('/role/getPage',app.controller.role.getPage)               //获取角色分页数据
+    apiRouter.post('/role/editAction',app.controller.role.editAction)         //角色编辑
+    apiRouter.post('/role/deleteAction',app.controller.role.deleteAction)     //删除角色
 
     //设定api路由为router的子路由
     router.use('/api', apiRouter.routes(), apiRouter.allowedMethods())

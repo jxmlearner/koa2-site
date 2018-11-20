@@ -55,8 +55,8 @@ module.exports = (app) => {
     }
     catch (err){
       if (401 == err.status) {
-        ctx.status = 401
-        ctx.body = '您未提供Authorization header或者身份过期,请登录获取。'
+        ctx.status = 200  //这里还是给个成功的返回,只是将code设置成401
+        ctx.body = {code:401, msg:'您未提供Authorization header或者身份过期,请登录获取。'}
       } else {
         throw err
       }
@@ -85,9 +85,8 @@ module.exports = (app) => {
       }
       await next()
     }
-    catch (err){
-      err.status=401
-      throw err
+    catch (err){    //这个中间件不做任何路由拦截处理，因为koa-jwt已经做了, 这个中间件的作用是，如果token能够解析正确，就把它解析成登录用户对象并赋值给 ctx.user
+      await next()
     }
   })
 }

@@ -6,7 +6,7 @@ class Result{
     return {code:200,msg:msg,data:data}
   }
   pageresult(msg,data){   //分页数据的返回
-    return {code:200,msg:msg,rows:data.rows,count:data.count}
+    return {code:200,msg:msg,rows:data.rows.map(m=>m.dataValues),count:data.count}
   }
 }
 
