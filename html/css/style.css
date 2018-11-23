@@ -195,7 +195,7 @@ div.clasictext p {
 }
 
 
-/*图书列表*/
+/*首页图书列表*/
 .section-recommend{
     padding-top:0;
 }
@@ -258,11 +258,44 @@ div.clasictext p {
 }
 
 /*图书列表页样式*/
-.books-cate{
+.books-cate{  /*左侧图书分类*/
     margin:0;
     padding-left:20px;
 }
 .books-cate>li{ margin-bottom:1rem;}
+
+.book-list{
+    display: flex;
+    flex-direction: row;
+    padding:2rem 0;
+    flex-wrap: wrap;
+    justify-content: center;
+}
+.book{
+    width:256px;
+    padding:0 20px;
+    margin-bottom:1rem;
+    cursor: pointer;
+}
+.book-pic{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    background-color: #F6F6F6;
+    
+}
+.book-pic img{
+    max-width: 100%;
+    border-radius: 5px;
+}
+.book-tit{
+    line-height: 40px;
+}
+
+
+
+
 
 
 /*图书详情页样式*/
