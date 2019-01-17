@@ -86,7 +86,7 @@ module.exports = (app) => {
       await next()
     }
     catch (err){    //这个中间件不做任何路由拦截处理，因为koa-jwt已经做了, 这个中间件的作用是，如果token能够解析正确，就把它解析成登录用户对象并赋值给 ctx.user
-      await next()
+      throw err
     }
   })
 }

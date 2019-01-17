@@ -269,13 +269,12 @@ div.clasictext p {
     flex-direction: row;
     padding:2rem 0;
     flex-wrap: wrap;
-    justify-content: center;
 }
 .book{
     width:256px;
     padding:0 20px;
     margin-bottom:1rem;
-    cursor: pointer;
+    cursor: pointer; 
 }
 .book-pic{
     display: flex;
@@ -283,7 +282,8 @@ div.clasictext p {
     align-items: center;
     justify-content: center;
     background-color: #F6F6F6;
-    
+    position: relative;
+    overflow: hidden;    
 }
 .book-pic img{
     max-width: 100%;
@@ -291,6 +291,25 @@ div.clasictext p {
 }
 .book-tit{
     line-height: 40px;
+}
+.book-detail{
+    position: absolute;
+    left:0;
+    right:0;
+    bottom:0;
+    height: 40px;
+    overflow: hidden;
+    background-color:rgba(60,60,60,0.8);
+    color:#fff;
+    border-bottom-left-radius: 5px;
+    border-bottom-right-radius: 5px;
+    transition: height 0.4s;
+    padding:0 20px;
+}
+.book:hover .book-detail{
+    height: 100%;
+    border-top-left-radius: 5px;
+    border-top-right-radius: 5px;
 }
 
 
